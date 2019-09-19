@@ -1,0 +1,18 @@
+Locales['en'] = {
+  ['shop_robbery'] = 'Gang Turf',
+  ['press_to_rob'] = 'press ~INPUT_CONTEXT~ to ~o~claim~s~ ~b~%s~s~',
+  ['robbery_timer'] = 'Gang Turf claim: ~r~%s~s~ seconds remaning',
+  ['recently_robbed'] = 'this Turf was recently been claimed. Please wait ~y~%s~s~ seconds until you can claim it again',
+  ['rob_in_prog'] = '~r~a war is in progress at ~b~%s~s~',
+  ['started_to_rob'] = 'you started to claim ~y~%s~s~',
+  ['alarm_triggered'] = 'the alarm has been triggered',
+  ['robbery_complete'] = '~r~The war has been successful~s~, you claimed this turf and ~o~earned~s~ ~g~$%s~s~',
+  ['robbery_complete_at'] = '~r~War successful at ~y~%s~s~',
+  ['robbery_cancelled'] = 'the Turf claim has been cancelled!',
+  ['robbery_cancelled_at'] = '~r~The turf claim at ~b~%s~s~ has been cancelled!',
+  ['min_gang'] = 'there must be at least ~r~%s gangsters~s~ in town to claim.',
+  ['robbery_already'] = '~r~The turf is already being attacked.',
+  ['no_threat'] = 'you do not pose a threat to the Turf keeper',
+  ['cant_rob_rank'] = 'You are not a gang member.',
+  ['already_claimed'] = 'Your gang already claimed this turf.',
+}
