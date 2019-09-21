@@ -93,7 +93,7 @@ end)
 Citizen.CreateThread(function()
 	for k,v in pairs(Turfs) do
 		local blip = AddBlipForCoord(v.position.x, v.position.y, v.position.z)
-		SetBlipSprite(blip, 156)
+		SetBlipSprite(blip, 159)
 		SetBlipScale(blip, 0.8)
 		SetBlipAsShortRange(blip, true)
 
