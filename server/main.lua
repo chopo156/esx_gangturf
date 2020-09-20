@@ -13,9 +13,11 @@ AddEventHandler('esx_gangturf:tooFar', function(currentTurf)
 	for i=1, #xPlayers, 1 do
 		local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
 		
-		if xPlayer.job.name == 'mafia' or xPlayer.job.name == 'bloods' or xPlayer.job.name == 'lostmc' or xPlayer.job.name == 'taliban' then
-			TriggerClientEvent('esx:showNotification', xPlayers[i], _U('robbery_cancelled_at', Turfs[currentTurf].nameOfTurf))
-			TriggerClientEvent('esx_gangturf:killBlip', xPlayers[i])
+		for key, value in pairs(Config.GangJobs) do
+			if xPlayer.job.name == value then
+				TriggerClientEvent('esx:showNotification', xPlayers[i], _U('robbery_cancelled_at', Turfs[currentTurf].nameOfTurf))
+				TriggerClientEvent('esx_gangturf:killBlip', xPlayers[i])
+			end
 		end
 	end
 
@@ -31,34 +33,24 @@ AddEventHandler('esx_gangturf:robberyStarted', function(currentTurf)
 	local _source  = source
 	local xPlayer  = ESX.GetPlayerFromId(_source)
 	local xPlayers = ESX.GetPlayers()
+	local foundJob = false
 	
-	if xPlayer.job.name == 'mafia' or xPlayer.job.name == 'bloods' or xPlayer.job.name == 'lostmc' or xPlayer.job.name == 'taliban' then
-		
-	else
-		return
+	for key, value in pairs(Config.GangJobs) do
+		if xPlayer.job.name == value and not foundJob then
+			foundJob = true
+		end
+	end
+
+	if not foundJob then
 		TriggerClientEvent('esx:showNotification', _source, _U('cant_rob_rank'))
+		return
 	end
 	
 	if Turfs[currentTurf] then
 		local Turf = Turfs[currentTurf]
 		
-		if xPlayer.job.name == 'mafia' then
-			if Turf.isClaimed == 'mafia' then
-				TriggerClientEvent('esx:showNotification', _source, _U('already_claimed'))
-				return
-			end
-		elseif xPlayer.job.name == 'bloods' then
-			if Turf.isClaimed == 'bloods' then
-				TriggerClientEvent('esx:showNotification', _source, _U('already_claimed'))
-				return
-			end
-		elseif xPlayer.job.name == 'lostmc' then
-			if Turf.isClaimed == 'lostmc' then
-				TriggerClientEvent('esx:showNotification', _source, _U('already_claimed'))
-				return
-			end
-		elseif xPlayer.job.name == 'taliban' then
-			if Turf.isClaimed == 'taliban' then
+		for key, value in pairs(Config.GangJobs) do
+			if xPlayer.job.name == value and Turf.isClaimed == value then
 				TriggerClientEvent('esx:showNotification', _source, _U('already_claimed'))
 				return
 			end
@@ -72,8 +64,10 @@ AddEventHandler('esx_gangturf:robberyStarted', function(currentTurf)
 		local Gangsters = 0
 		for i=1, #xPlayers, 1 do
 			local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
-			if xPlayer.job.name == 'mafia' or xPlayer.job.name == 'bloods' or xPlayer.job.name == 'lostmc' or xPlayer.job.name == 'taliban' then
-				Gangsters = Gangsters + 1
+			for key, value in pairs(Config.GangJobs) do
+				if xPlayer.job.name == value then
+					Gangsters = Gangsters + 1
+				end
 			end
 		end
 
@@ -83,9 +77,11 @@ AddEventHandler('esx_gangturf:robberyStarted', function(currentTurf)
 
 				for i=1, #xPlayers, 1 do
 					local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
-					if xPlayer.job.name == 'mafia' or xPlayer.job.name == 'bloods' or xPlayer.job.name == 'lostmc' or xPlayer.job.name == 'taliban' then
-						TriggerClientEvent('esx:showNotification', xPlayers[i], _U('rob_in_prog', Turf.nameOfTurf))
-						TriggerClientEvent('esx_gangturf:setBlip', xPlayers[i], Turfs[currentTurf].position)
+					for key, value in pairs(Config.GangJobs) do
+						if xPlayer.job.name == value then
+							TriggerClientEvent('esx:showNotification', xPlayers[i], _U('rob_in_prog', Turf.nameOfTurf))
+							TriggerClientEvent('esx_gangturf:setBlip', xPlayers[i], Turfs[currentTurf].position)
+						end
 					end
 				end
 				
@@ -104,17 +100,13 @@ AddEventHandler('esx_gangturf:robberyStarted', function(currentTurf)
 						if xPlayer then
 							TriggerClientEvent('esx_gangturf:robberyComplete', _source, Turf.reward)
 							
-							if xPlayer.job.name == 'mafia' then
-								Turf.isClaimed = 'mafia'
-							elseif xPlayer.job.name == 'bloods' then
-								Turf.isClaimed = 'bloods'
-							elseif xPlayer.job.name == 'lostmc' then
-								Turf.isClaimed = 'lostmc'
-							elseif xPlayer.job.name == 'taliban' then
-								Turf.isClaimed = 'taliban'
+							for key, value in pairs(Config.GangJobs) do
+								if xPlayer.job.name == value then
+									Turf.isClaimed = value
+								end
 							end
 							
-							if Config.GiveSocietyMoney then
+							if Config.GiveDirtyMoney then
 								xPlayer.addAccountMoney('black_money', Turf.reward)
 							else
 								xPlayer.addMoney(Turf.reward)
@@ -124,10 +116,13 @@ AddEventHandler('esx_gangturf:robberyStarted', function(currentTurf)
 							for i=1, #xPlayers, 1 do
 								xPlayer = ESX.GetPlayerFromId(xPlayers[i])
 								
-								if xPlayer.job.name == 'mafia' or xPlayer.job.name == 'bloods' or xPlayer.job.name == 'lostmc' or xPlayer.job.name == 'taliban' then
-									TriggerClientEvent('esx:showNotification', xPlayers[i], _U('robbery_complete_at', Turf.nameOfTurf))
-									TriggerClientEvent('esx_gangturf:killBlip', xPlayers[i])
+								for key, value in pairs(Config.GangJobs) do
+									if xPlayer.job.name == value then
+										TriggerClientEvent('esx:showNotification', xPlayers[i], _U('robbery_complete_at', Turf.nameOfTurf))
+										TriggerClientEvent('esx_gangturf:killBlip', xPlayers[i])
+									end
 								end
+								
 							end
 						end
 					end

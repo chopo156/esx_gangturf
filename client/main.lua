@@ -114,7 +114,7 @@ Citizen.CreateThread(function()
 
 			if distance < Config.Marker.DrawDistance then
 				if not holdingUp then
-					DrawMarker(Config.Marker.Type, TurfPos.x, TurfPos.y, TurfPos.z - 1, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Config.Marker.x, Config.Marker.y, Config.Marker.z, Config.Marker.r, Config.Marker.g, Config.Marker.b, Config.Marker.a, false, false, 2, false, false, false, false)
+					DrawMarker(Config.Marker.Type, TurfPos.x, TurfPos.y, TurfPos.z, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Config.Marker.x, Config.Marker.y, Config.Marker.z, Config.Marker.r, Config.Marker.g, Config.Marker.b, Config.Marker.a, false, false, 2, true, false, false, false)
 
 					if distance < 0.5 then
 						ESX.ShowHelpNotification(_U('press_to_rob', v.nameOfTurf))
