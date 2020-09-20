@@ -1,5 +1,5 @@
 # esx_gangturf
-A re-edit of esx_holdup, currently using these jobs as gangs: Mafia, Bloods, LostMC and Taliban.
+An edit of esx_holdup, allowing you to add jobs and give them access to claim/rob certain turfs around the city(you can add as many as you would like).
 
 ### Requirements
 - ESX Framework.
